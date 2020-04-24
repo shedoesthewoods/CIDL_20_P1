@@ -4,6 +4,7 @@ public class Main {
     private static String alphabet =
             "abcçdefgğhıijklmnoöpqrsştuüvwxyzABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ_-*/+!'?=&%$#,.:<>|()[]{}0123456789";
     static char[] str_alphabet = alphabet.toCharArray();
+    private static float totalGeneration = 0;
 
     public static void main(String[] args) {
         String password = "İşlemselZeka_DL_20";
@@ -16,6 +17,7 @@ public class Main {
         System.out.println("\nWord to find: \'" + password + "\'");
         System.out.println("Population size: " + nb_individuals);
         System.out.println("Maximum number of generations: " + max_gen);
+
         for (int i = 1; i < 11; i++) {
             System.out.println("\nRun #" + i);
 
@@ -36,17 +38,23 @@ public class Main {
         population.calculateFitness(password);
         Individual bestFit = population.bestFitness();
 
+        float generationAverage;
+
         //This is generation 1, we keep making new generations till we find an individual with the perfect fitness.
-        int nb_gen = 1;
-        while (population.bestFitnessInPopulation() != password.length() && nb_gen < max_gen) {
+        int numOfGenerations = 1;
+        while (population.bestFitnessInPopulation() != password.length() && numOfGenerations < max_gen){
             population.newGeneration();
             population.calculateFitness(password);
-            nb_gen++;
+            numOfGenerations++;
 
             bestFit = population.bestFitness();
         }
 
-        System.out.println("Best result: " + bestFit.toString() + "\nAt generation #" + nb_gen);
+        totalGeneration += numOfGenerations;
+        generationAverage = numOfGenerations/totalGeneration;
+
+        System.out.println("Best result: " + bestFit.toString() + "\nAt generation #" + numOfGenerations);
         System.out.println("Number of mutation: " + population.getMutationCount());
+        System.out.printf("Generation average: %f\n", generationAverage);
     }
 }

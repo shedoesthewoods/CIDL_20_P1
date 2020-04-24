@@ -26,34 +26,34 @@ public class Population {
 
     void newGeneration() {
         ArrayList<Individual> parents;
-        ArrayList<Individual> childs;
-        Individual indiv;
+        ArrayList<Individual> children;
+        Individual individual;
 
-        ArrayList<Individual> newPop = new ArrayList<>();
+        ArrayList<Individual> newPopulation = new ArrayList<>();
 
         //Top 1 elitism
-        indiv = bestFitness();
-        indiv.aging();
-        newPop.add(indiv);
+        individual = bestFitness();
+        individual.aging();
+        newPopulation.add(individual);
 
         //5% new blood
         for (int i = 0; i < individualsList.size()/20 + 1; i++) {
-            indiv = new Individual(genesLength);
-            indiv.age = -1;
-            newPop.add(indiv);
+            individual = new Individual(genesLength);
+            individual.age = -1;
+            newPopulation.add(individual);
         }
 
         //What's left is offsprings
-        while (newPop.size() < populationMaxSize) {
+        while (newPopulation.size() < populationMaxSize) {
             parents = rouletteWheelSelection();
-            childs = uniformCrossover(parents);
-            tryMutate(childs);
+            children = uniformCrossover(parents);
+            tryMutate(children);
             mutationCount++;
-            newPop.addAll(childs);
+            newPopulation.addAll(children);
         }
         //We replace the old generation by the new one
         individualsList.clear();
-        individualsList.addAll(newPop);
+        individualsList.addAll(newPopulation);
     }
 
     private ArrayList<Individual> rouletteWheelSelection() {
@@ -104,7 +104,6 @@ public class Population {
 
         //Then we randomly exchange gene between children to mix them.
         for (int i = 0; i < length; i++) {
-
             if (new Random().nextBoolean()) {
                 temp = children.get(0).genes[i];
                 children.get(0).genes[i] = children.get(1).genes[i];

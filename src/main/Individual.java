@@ -77,7 +77,7 @@ public class Individual {
         Random rand = new Random();
         int ind_shuffle_start;
 
-        //We pick a random range for the scrubbling ( the number of genes that will be shuffled )
+        //We pick a random range for the scrumbling (the number of genes that will be shuffled)
         //From 2 to genes.length/2+2
         int range_shuffle = rand.nextInt((genes.length/2)) + 2;
 
